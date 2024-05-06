@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class ImplTrainingService implements ITrainingService{
@@ -24,5 +25,20 @@ public class ImplTrainingService implements ITrainingService{
     @Override
     public Training saveTraining(Training training) {
         return trainingRepository.save(training);
+    }
+
+    @Override
+    public void deleteTraining(Long id){
+        trainingRepository.deleteById(id);
+    }
+
+    @Override
+    public Training getTrainingById(Long id){
+        return trainingRepository.findById(id).get();
+    }
+
+    @Override
+    public Optional<Training> readTraining(Long id){
+        return trainingRepository.findById(id);
     }
 }
