@@ -1,6 +1,7 @@
 package fr.fms.apitrainings.web;
 
 import fr.fms.apitrainings.entities.Training;
+import fr.fms.apitrainings.exceptions.RecordNotFoundException;
 import fr.fms.apitrainings.service.ImplTrainingService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -52,13 +53,19 @@ public class TrainingController {
                 return ResponseEntity.created(location).build();
     }
 
+//    @GetMapping("/trainings/{id}")
+//    public ResponseEntity<Training> getTrainingById(@PathVariable("id") Long id){
+//        Optional<Training> training = implTrainingService.readTraining(id);
+//        if(training.isPresent()){
+//            return new ResponseEntity<>(training.get(), HttpStatus.OK);
+//        }
+//        return null;
+//    }
+
     @GetMapping("/trainings/{id}")
-    public ResponseEntity<Training> getTrainingById(@PathVariable("id") Long id){
-        Optional<Training> training = implTrainingService.readTraining(id);
-        if(training.isPresent()){
-            return new ResponseEntity<>(training.get(), HttpStatus.OK);
-        }
-        return null;
+    public Training getTrainingById(@PathVariable("id") Long id){
+        return implTrainingService.readTraining(id)
+                .orElseThrow(()-> new RecordNotFoundException("Id de Formation " + id + " n'existe pas"));
     }
 
 
