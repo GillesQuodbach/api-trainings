@@ -13,6 +13,9 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 import java.net.URI;
+
+@CrossOrigin("*")
+//@CrossOrigin("http://localhost:4200")
 @RestController
 @RequestMapping("/api")
 public class TrainingController {
