@@ -1,6 +1,8 @@
 package fr.fms.apitrainings.web;
 
 import fr.fms.apitrainings.entities.Training;
+import fr.fms.apitrainings.exceptions.ErrorResponse;
+import fr.fms.apitrainings.exceptions.MissingHeaderInfoException;
 import fr.fms.apitrainings.exceptions.RecordNotFoundException;
 import fr.fms.apitrainings.service.ImplTrainingService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,12 +11,11 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import javax.swing.text.html.Option;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 import java.net.URI;
-
 @CrossOrigin
 //@CrossOrigin("http://localhost:4200")
 @RestController
@@ -34,11 +35,6 @@ public class TrainingController {
     }
 
 
-//    @PostMapping("/trainings")
-//    public Training saveTraining(@RequestBody Training training){
-//        return implTrainingService.saveTraining(training);
-//    }
-
     @PostMapping("/trainings")
     public ResponseEntity<Training> saveTraining(@RequestBody Training t){
         Training training = implTrainingService.saveTraining(t);
@@ -53,20 +49,10 @@ public class TrainingController {
                 return ResponseEntity.created(location).build();
     }
 
-//    @GetMapping("/trainings/{id}")
-//    public ResponseEntity<Training> getTrainingById(@PathVariable("id") Long id){
-//        Optional<Training> training = implTrainingService.readTraining(id);
-//        if(training.isPresent()){
-//            return new ResponseEntity<>(training.get(), HttpStatus.OK);
-//        }
-//        return null;
-//    }
-
     @GetMapping("/trainings/{id}")
     public Training getTrainingById(@PathVariable("id") Long id){
         return implTrainingService.readTraining(id)
                 .orElseThrow(()-> new RecordNotFoundException("Id de Formation " + id + " n'existe pas"));
     }
-
 
 }
