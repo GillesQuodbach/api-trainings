@@ -6,5 +6,8 @@ import java.util.List;
 
 
 public interface TrainingRepository extends JpaRepository<Training, Long> {
-    public List<Training> findAll();
+    List<Training> findAll();
+
+    List<Training> findByCategoryId(Long id);
+
 }

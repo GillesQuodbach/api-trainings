@@ -1,28 +1,27 @@
 package fr.fms.apitrainings.web;
 
+import fr.fms.apitrainings.dao.CategoryRepository;
+import fr.fms.apitrainings.entities.Category;
 import fr.fms.apitrainings.entities.Training;
-import fr.fms.apitrainings.exceptions.ErrorResponse;
-import fr.fms.apitrainings.exceptions.MissingHeaderInfoException;
 import fr.fms.apitrainings.exceptions.RecordNotFoundException;
 import fr.fms.apitrainings.service.ImplTrainingService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
-import java.util.Optional;
 import java.net.URI;
+
 @CrossOrigin
-//@CrossOrigin("http://localhost:4200")
 @RestController
 @RequestMapping("/api")
 public class TrainingController {
     @Autowired
     private ImplTrainingService implTrainingService;
+    @Autowired
+    private CategoryRepository categoryRepository;
 
     @GetMapping("/trainings")
     public List<Training> allTraining() throws Exception {
@@ -54,5 +53,16 @@ public class TrainingController {
         return implTrainingService.readTraining(id)
                 .orElseThrow(()-> new RecordNotFoundException("Id de Formation " + id + " n'existe pas"));
     }
+
+    @GetMapping("/categories")
+    public List<Category> allCategories() throws Exception {
+        return categoryRepository.findAll();
+    }
+
+    @GetMapping("/trainings/category/{id}")
+    public List<Training> getTrainingByCategoryId(@PathVariable("id") Long id){
+        return implTrainingService.getTrainingByCat(id);
+    }
+
 
 }

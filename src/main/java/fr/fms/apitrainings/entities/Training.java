@@ -1,13 +1,11 @@
 package fr.fms.apitrainings.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.io.Serializable;
 
 @Entity
@@ -22,5 +20,9 @@ public class Training implements Serializable {
     private String description;
     private double price;
     private int quantity;
+
+    @ManyToOne
+    @JsonIgnore
+    private Category category;
 
 }

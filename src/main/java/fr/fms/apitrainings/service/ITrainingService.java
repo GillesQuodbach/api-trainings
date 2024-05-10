@@ -18,4 +18,6 @@ public interface ITrainingService {
     public Training getTrainingById(Long id) throws Exception;
 
     public Optional<Training> readTraining(Long id);
+
+    List<Training> getTrainingByCat(Long id);
 }

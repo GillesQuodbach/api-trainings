@@ -5,7 +5,6 @@ import fr.fms.apitrainings.entities.Training;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -41,4 +40,7 @@ public class ImplTrainingService implements ITrainingService{
     public Optional<Training> readTraining(Long id){
         return trainingRepository.findById(id);
     }
+
+    @Override
+    public List<Training> getTrainingByCat(Long id){ return trainingRepository.findByCategoryId(id);}
 }
