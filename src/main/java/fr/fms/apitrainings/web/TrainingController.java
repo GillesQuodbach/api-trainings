@@ -1,8 +1,10 @@
 package fr.fms.apitrainings.web;
 
 import fr.fms.apitrainings.dao.CategoryRepository;
+import fr.fms.apitrainings.dao.UserRepository;
 import fr.fms.apitrainings.entities.Category;
 import fr.fms.apitrainings.entities.Training;
+import fr.fms.apitrainings.entities.User;
 import fr.fms.apitrainings.exceptions.RecordNotFoundException;
 import fr.fms.apitrainings.service.ImplTrainingService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +24,8 @@ public class TrainingController {
     private ImplTrainingService implTrainingService;
     @Autowired
     private CategoryRepository categoryRepository;
+    @Autowired
+    private UserRepository userRepository;
 
     @GetMapping("/trainings")
     public List<Training> allTraining() throws Exception {
@@ -56,7 +60,7 @@ public class TrainingController {
 
     @GetMapping("/categories")
     public List<Category> allCategories() throws Exception {
-        return categoryRepository.findAll();
+        return implTrainingService.getAllCategories();
     }
 
     @GetMapping("/trainings/category/{id}")
@@ -64,5 +68,10 @@ public class TrainingController {
         return implTrainingService.getTrainingByCat(id);
     }
 
-
+    // requête http://localhost:8080/api/users?username=anonymous
+    // récupère l'utilisateur par username
+    @GetMapping("/users")
+    public User getUserByUsername(@RequestParam String username) throws Exception {
+        return userRepository.findUserByUsername(username);
+    }
 }

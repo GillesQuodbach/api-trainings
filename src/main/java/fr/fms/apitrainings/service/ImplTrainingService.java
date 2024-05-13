@@ -1,7 +1,11 @@
 package fr.fms.apitrainings.service;
 
+import fr.fms.apitrainings.dao.CategoryRepository;
 import fr.fms.apitrainings.dao.TrainingRepository;
+import fr.fms.apitrainings.dao.UserRepository;
+import fr.fms.apitrainings.entities.Category;
 import fr.fms.apitrainings.entities.Training;
+import fr.fms.apitrainings.entities.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -13,7 +17,10 @@ public class ImplTrainingService implements ITrainingService{
 
     @Autowired
     TrainingRepository trainingRepository;
-
+    @Autowired
+    CategoryRepository categoryRepository;
+    @Autowired
+    UserRepository userRepository;
     private List<Training> trainingsList;
 
     @Override
@@ -43,4 +50,19 @@ public class ImplTrainingService implements ITrainingService{
 
     @Override
     public List<Training> getTrainingByCat(Long id){ return trainingRepository.findByCategoryId(id);}
+
+    @Override
+    public List<User> getAllUsers() throws Exception {
+        return userRepository.findAll();
+    }
+
+    @Override
+    public List<Category> getAllCategories() {
+        return categoryRepository.findAll();
+    }
+
+    @Override
+    public User getUser(String username){
+        return userRepository.findUserByUsername(username);
+    }
 }
